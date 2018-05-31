@@ -47,8 +47,8 @@ img.first-load {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -68px;
-    margin-left: -68px;
+    margin-top: -75px;
+    margin-left: -75px;
 }
 
 .btn-red:active {
@@ -63,9 +63,8 @@ img.first-load {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -68px;
-    margin-left: -68px;
-    display: none;
+    margin-top: -75px;
+    margin-left: -75px;
 }
 
 .btn-green:active {
@@ -136,16 +135,16 @@ img.first-load {
         width: 80px;
         height: 80px;
         background-size: 80px;
-        margin-top: -38px;
-        margin-left: -38px;
+        margin-top: -40px;
+        margin-left: -40px;
     }
 
     .btn-green {
         width: 80px;
         height: 80px;
         background-size: 80px;
-        margin-top: -38px;
-        margin-left: -38px;
+        margin-top: -40px;
+        margin-left: -40px;
     }
 
     .container {
