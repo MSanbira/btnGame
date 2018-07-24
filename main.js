@@ -153,7 +153,7 @@ function saveTopScoreLocalStorage() {
 }
 
 function getTopScoreFromLocalStorage() {
-    if (window.localStorage != undefined) {
+    if (window.localStorage != null) {
         topScore = window.localStorage.getItem('topScore');
         topScoreDisplay.innerHTML = "top score: " + topScore;
     }
