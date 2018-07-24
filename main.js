@@ -1,9 +1,15 @@
-
 let count = 0;
 let topScore = 0;
 let sec = 0;
 let gameInterval;
+let btnRed = {
+    element: document.querySelector(".btn-red"),
+    x: 50,
+    y: 50,
+    radius: 16
+}
 let arrOfBtnGreen = [];
+
 const firstLoad = document.querySelectorAll(".first-load");
 const wrapper = document.querySelector(".wrapper");
 let timer = document.querySelector(".timer");
@@ -11,6 +17,24 @@ let gameOverScreen = document.querySelector(".game-over-screen");
 let counter = document.querySelector(".count");
 let newGameStatment = document.querySelector(".new-game-statment");
 let topScoreDisplay = document.querySelector(".top-score");
+let gameOverMessage = document.querySelector(".game-over-message");
+
+const gameOverMessageFaild = ['ohh, too bad', 'so close...', 'maybe next try', 'try, try again', 'BLARGZZZ'];
+const gameOverMessageWin = ['You did it!', 'Yes You Can!', 'Sweet Sucsses!', 'Now try to beat it again', 'BAZINGA!!!'];
+
+function gamePlay() {
+    moveBtnRed();
+    count++;
+    if (count === 1) {
+        sec = 60;
+        startTimer();
+    }
+    if (count >= 10) {
+        createNewBtnGreen();
+        moveBtnGreen();
+    }
+    showBtns();
+}
 
 function startTimer() {
     gameInterval = setInterval(function () {
@@ -29,28 +53,7 @@ function startTimer() {
     }, 1000);
 }
 
-let btnRed = {
-    element: document.querySelector(".btn-red"),
-    x: 50,
-    y: 50,
-    radius: 16
-}
-
-function moveBtnRed() {
-    btnRed.x = Math.random() * 60 + 20;
-    btnRed.y = Math.random() * 60 + 20;
-    count++;
-    if (count === 1) {
-        sec = 60;
-        startTimer();
-    }
-    if (count >= 10) {
-        moveBtnGreen();
-    }
-    showBtns();
-}
-
-function moveBtnGreen() {
+function createNewBtnGreen() {
     if (count % 10 === 0) {
         let btnElement = document.createElement('DIV');
         btnElement.setAttribute('class', 'btn-green');
@@ -59,11 +62,19 @@ function moveBtnGreen() {
             element: btnElement,
             x: 0,
             y: 0,
-            radius: 16
+            radius: 3
         }
         arrOfBtnGreen.push(btnGreen);
         wrapper.appendChild(btnGreen.element);
     }
+}
+
+function moveBtnRed() {
+    btnRed.x = Math.random() * 60 + 20;
+    btnRed.y = Math.random() * 60 + 20;
+}
+
+function moveBtnGreen() {
     for (const btnGreen of arrOfBtnGreen) {
         while (true) {
             btnGreen.x = Math.random() * 60 + 20;
@@ -93,8 +104,19 @@ function showBtns() {
 
 function showGameOverScreen() {
     document.querySelector("#finalScore").innerHTML = count;
+    setGameOverMessage();
     gameOverScreen.style.display = "block";
     setTimeout(function () { gameOverScreen.setAttribute('onClick', 'restart()'); }, 2000);
+}
+
+function setGameOverMessage() {
+    let randomNum = Math.round(Math.random() * 4);
+    if (count > topScore) {
+        gameOverMessage.innerHTML = `${gameOverMessageWin[randomNum]} <br>New Top Score:`
+    }
+    else {
+        gameOverMessage.innerHTML = `${gameOverMessageFaild[randomNum]} <br> Your score was:`
+    }
 }
 
 function restart() {
@@ -137,7 +159,7 @@ function getTopScoreFromLocalStorage() {
     }
 }
 
-function init () {
+function init() {
     getTopScoreFromLocalStorage();
 }
 
