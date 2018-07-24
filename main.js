@@ -6,16 +6,21 @@ let gameInterval;
 let arrOfBtnGreen = [];
 const firstLoad = document.querySelectorAll(".first-load");
 const wrapper = document.querySelector(".wrapper");
+let timer = document.querySelector(".timer");
+let gameOverScreen = document.querySelector(".game-over-screen");
+let counter = document.querySelector(".count");
+let newGameStatment = document.querySelector(".new-game-statment");
+let topScoreDisplay = document.querySelector(".top-score");
 
 function startTimer() {
     gameInterval = setInterval(function () {
         sec--;
-        document.querySelector(".timer").innerHTML = "time: " + sec + "s";
+        timer.innerHTML = "time: " + sec + "s";
         if (sec <= 5) {
-            document.querySelector(".timer").style.color = "red";
+            timer.style.color = "red";
         }
         else {
-            document.querySelector(".timer").style.color = "black";
+            timer.style.color = "black";
         }
         if (sec <= 0) {
             showGameOverScreen();
@@ -75,11 +80,11 @@ function showBtns() {
         for (let i = 0; i < firstLoad.length; i++) {
             firstLoad[i].style.display = "none";
         }
-        document.querySelector(".new-game").style.display = "none";
+        newGameStatment.style.display = "none";
     }
     btnRed.element.style.top = btnRed.y + "%";
     btnRed.element.style.left = btnRed.x + "%";
-    document.querySelector(".count").innerHTML = "Score: " + count;
+    counter.innerHTML = "Score: " + count;
     for (const btnGreen of arrOfBtnGreen) {
         btnGreen.element.style.top = btnGreen.y + "%";
         btnGreen.element.style.left = btnGreen.x + "%";
@@ -88,12 +93,14 @@ function showBtns() {
 
 function showGameOverScreen() {
     document.querySelector("#finalScore").innerHTML = count;
-    document.querySelector(".game-over-score").style.display = "block";
+    gameOverScreen.style.display = "block";
+    setTimeout(function () { gameOverScreen.setAttribute('onClick', 'restart()'); }, 2000);
 }
 
 function restart() {
     if (count > topScore) {
         topScore = count;
+        saveTopScoreLocalStorage();
     }
     clearInterval(gameInterval);
     sec = 0;
@@ -105,15 +112,34 @@ function restart() {
 }
 
 function showNewGame() {
-    document.querySelector(".top-score").innerHTML = "top score: " + topScore;
-    document.querySelector(".timer").innerHTML = " ";
-    document.querySelector(".game-over-score").style.display = "none";
+    topScoreDisplay.innerHTML = "top score: " + topScore;
+    timer.innerHTML = " ";
+    gameOverScreen.style.display = "none";
+    gameOverScreen.removeAttribute('onClick');
     wrapper.innerHTML = " ";
-    document.querySelector(".count").innerHTML = "Score: " + count;
-    document.querySelector(".new-game").style.display = "block";
+    counter.innerHTML = "Score: " + count;
+    newGameStatment.style.display = "block";
     btnRed.element.style.top = btnRed.y + "%";
     btnRed.element.style.left = btnRed.x + "%";
     for (let i = 0; i < firstLoad.length; i++) {
         firstLoad[i].style.display = "block";
     }
 }
+
+function saveTopScoreLocalStorage() {
+    window.localStorage.setItem('topScore', topScore);
+}
+
+function getTopScoreFromLocalStorage() {
+    if (window.localStorage != undefined) {
+        topScore = window.localStorage.getItem('topScore');
+        topScoreDisplay.innerHTML = "top score: " + topScore;
+    }
+}
+
+function init () {
+    getTopScoreFromLocalStorage();
+}
+
+init();
+

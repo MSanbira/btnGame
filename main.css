@@ -49,6 +49,7 @@ img.first-load {
     left: 50%;
     margin-top: -75px;
     margin-left: -75px;
+    cursor: pointer;
 }
 
 .btn-red:active {
@@ -65,13 +66,14 @@ img.first-load {
     left: 50%;
     margin-top: -75px;
     margin-left: -75px;
+    cursor: pointer;
 }
 
 .btn-green:active {
     background-image: url(assets/buttenG-pressed.png)
 }
 
-.new-game {
+.new-game-statment {
     font-size: 14px;
     position: fixed;
     bottom: 15%;
@@ -80,8 +82,8 @@ img.first-load {
     display: none;
 }
 
-.game-over-score {
-    background-color: lightgray;
+.game-over-screen {
+    background-color: rgb(167, 167, 255);
     border: 1px solid black;
     border-radius: 5px;
     position: fixed;
@@ -96,7 +98,7 @@ img.first-load {
 
 .count {
     border: 0.5px solid darkgrey;
-    background-color: lightgray;
+    background-color: rgb(167, 167, 255);
     border-radius: 5px;
     padding: 5px 15px;
     margin: 5px;
